@@ -17,7 +17,38 @@
       <div class="quote-section"></div>
     </header>
     <section class="task-section">
-      <h2>To do on <span id="current-date"></span>:</h2>
+      <header>
+        <h2>To do on <span id="current-date"></span>:</h2>
+      </header>
+      <div id="add-task">
+        <button class="js-modal-trigger" data-target="add-task-modal">
+          Add Task
+        </button>
+        <div class="modal" id="add-task-modal">
+          <div class="modal-background"></div>
+        </div>
+        <div class="modal-content">
+          <form id="add-task-form">
+            <input
+              class="input is-medium is-rounded"
+              type="text"
+              placeholder="Add task here..."
+              id="task-name"
+            />
+            <div class="select" id="priority-level">
+              <select>
+                Choose Priority Level
+                <option>High Priority</option>
+                <option>Medium Priority</option>
+                <option>Low Priority</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <button class="modal-close is-large" aria-label="close">
+          Add Task
+        </button>
+      </div>
     </section>
 
     <section class="news-section"></section>
