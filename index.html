@@ -26,29 +26,39 @@
         </button>
         <div class="modal" id="add-task-modal">
           <div class="modal-background"></div>
+
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <p class="modal-card-title">Add a task to complete today!</p>
+              <button class="delete close-modal" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+              <form id="add-task-form">
+                <input
+                  class="input is-medium is-rounded"
+                  type="text"
+                  placeholder="Add task here..."
+                  id="task-name"
+                />
+                <div class="select is-rounded" id="priority-level">
+                  <label>Select the Priority Level of this task</label>
+                  <select>
+                    <option value="0" id="default">High Priority</option>
+                    <option value="1">Medium Priority</option>
+                    <option value="2">Low Priority</option>
+                  </select>
+                </div>
+              </form>
+            </section>
+            <footer class="modal-card-foot">
+              <button class="button close-modal" id="add-task-submit">
+                Add Task
+              </button>
+            </footer>
+          </div>
         </div>
-        <div class="modal-content">
-          <form id="add-task-form">
-            <input
-              class="input is-medium is-rounded"
-              type="text"
-              placeholder="Add task here..."
-              id="task-name"
-            />
-            <div class="select" id="priority-level">
-              <select>
-                Choose Priority Level
-                <option>High Priority</option>
-                <option>Medium Priority</option>
-                <option>Low Priority</option>
-              </select>
-            </div>
-          </form>
-        </div>
-        <button class="modal-close is-large" aria-label="close">
-          Add Task
-        </button>
       </div>
+      <div class="buttons" id="task-list"></div>
     </section>
 
     <section class="news-section"></section>
