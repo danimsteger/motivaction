@@ -1,0 +1,23 @@
+.quote-section {
+    text-align: center;
+    font-size: 150%;
+    border-radius: 20px;
+    border-style: solid;
+    border-color: bisque;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#quotebtn{
+    background-color: black;
+    font-size: 50%;
+    color:white;
+    border-radius: 20px;
+    border-style: solid;
+    border-color: bisque;
+    border-width: 3px;
+    padding:5px;
+    margin-bottom: 10px;
+    }
+#quotebtn:hover{
+    box-shadow: 1px 1px 1px 1px bisque;
+    color:bisque;
+}     
