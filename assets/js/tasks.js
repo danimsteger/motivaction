@@ -14,61 +14,10 @@ $("#current-date").text(today.format("dddd, MMMM DD"));
 //   return crypto.randomUUID();
 // }
 
-function openModal() {
-  modal.addClass("is-active");
-}
-function closeModal() {
-  modal.removeClass("is-active");
-}
-
-function readTasksFromStorage() {
-  let tasks = JSON.parse(localStorage.getItem("tasks"));
-  if (!tasks) {
-    tasks = [];
-  }
-  return tasks;
-}
-function saveTasksToStorage(tasks) {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
-function handleAddTask(event) {
-  event.preventDefault();
-
-  const taskName = taskInputEl.val().trim();
-  const timestamp = new Date().getTime();
-  const priorityLevel = priorityLevelInputEl.find("option:selected").val();
-
-  const newTask = {
-    name: taskName,
-    priority: priorityLevel,
-    id: timestamp,
-  };
-
-  const tasks = readTasksFromStorage();
-  tasks.push(newTask);
-
-  let sortedTasks = tasks.sort((t1, t2) =>
-    t1.priority > t2.priority ? 1 : t1.priority < t2.priority ? -1 : 0
-  );
-  console.log(sortedTasks);
-
-  saveTasksToStorage(sortedTasks);
-
-  console.log(newTask);
-  console.log(tasks);
-
-  taskInputEl.val("");
-  priorityLevelInputEl.val(defaultPriority);
-  taskListEl.empty();
-  renderTaskList();
-}
-
 function createTask(task) {
-  console.log(task);
   const taskDiv = $("<button>")
     .addClass(
-      "button has-text-primary-100 block m-4 p-4 is-flex-direction-column"
+      "button has-text-primary-100 block m-4 p-4 is-flex-direction-column task-button"
     )
     .attr({
       "data-task-id": task.id,
@@ -82,6 +31,8 @@ function createTask(task) {
   const taskDeleteButton = $("<button>")
     .text("Delete")
     .attr("data-task-id", task.id);
+
+  taskDeleteButton.on("click", handleDeleteTask);
 
   // $(document).on("DOMNodeInserted", "#task-list", function () {
   //   taskListEl
@@ -119,15 +70,15 @@ function createTask(task) {
   //   console.log("this is running");
   // }
 
-  taskDiv.on("click", function () {
-    if (!taskDiv.hasClass("checked")) {
-      $(this).addClass("checked").attr("data-task-level", 3);
-    } else {
-      $(this)
-        .removeClass("checked")
-        .attr("data-task-level", task.priorityLevel);
-    }
-  });
+  // taskDiv.on("click", function () {
+  //   if (!taskDiv.hasClass("checked")) {
+  //     $(this).addClass("checked").attr("data-task-level", 3);
+  //   } else {
+  //     $(this)
+  //       .removeClass("checked")
+  //       .attr("data-task-level", task.priorityLevel);
+  //   }
+  // });
 
   return taskDiv;
 }
@@ -139,11 +90,81 @@ function renderTaskList() {
   //   t1.priority > t2.priority ? 1 : t1.priority < t2.priority ? -1 : 0
   // );
   // console.log(sortedTasks);
-
+  taskListEl.empty();
   for (let task of tasks) {
     taskListEl.append(createTask(task));
   }
 }
+
+function readTasksFromStorage() {
+  let tasks = JSON.parse(localStorage.getItem("tasks"));
+  if (!tasks) {
+    tasks = [];
+  }
+  return tasks;
+}
+function saveTasksToStorage(tasks) {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function openModal() {
+  modal.addClass("is-active");
+}
+function closeModal() {
+  modal.removeClass("is-active");
+}
+
+function handleAddTask(event) {
+  event.preventDefault();
+
+  const taskName = taskInputEl.val().trim();
+  const timestamp = new Date().getTime();
+  const priorityLevel = priorityLevelInputEl.find("option:selected").val();
+
+  const newTask = {
+    name: taskName,
+    priority: priorityLevel,
+    id: timestamp,
+  };
+
+  const tasks = readTasksFromStorage();
+  tasks.push(newTask);
+
+  let sortedTasks = tasks.sort((t1, t2) =>
+    t1.priority > t2.priority ? 1 : t1.priority < t2.priority ? -1 : 0
+  );
+  console.log(sortedTasks);
+
+  saveTasksToStorage(sortedTasks);
+
+  console.log(newTask);
+  console.log(tasks);
+
+  taskInputEl.val("");
+  priorityLevelInputEl.val(defaultPriority);
+  // taskListEl.empty();
+  renderTaskList();
+}
+
+function handleDeleteTask() {
+  const taskId = $(this).attr("data-task-id");
+  let tasks = readTasksFromStorage();
+
+  console.log(taskId);
+  tasks = tasks.filter((task) => task.id.toString() !== taskId);
+
+  console.log(taskId);
+  console.log(tasks);
+
+  saveTasksToStorage(tasks);
+  renderTaskList();
+}
+
+// tasks.forEach((task) => {
+//   if (task.id === taskId) {
+//     tasks.splice(tasks.indexOf(task), 1);
+//   }
+// });
 
 // function compareValues(key, order = 'asc') {
 //   return function innerSort(a, b) {
@@ -170,9 +191,23 @@ const taskList = $("#task-list");
 //   }
 // }
 
-// taskList.on("click", ".check-box", function (event) {
+// $(".check-box").change(function () {
+//   if ($(this).is(":checked")) {
+//     console.log("checked this!!");
+//     $(this).parent().addClass("checked");
+//   } else {
+//     $(this).parent().removeClass("checked");
+//   }
+// });
+
+// taskList.on("click", ".task-button", function (event) {
 //   alert("checked");
-//   // event.target.addClass("checked");
+//   $(event.target).parent.addClass("checked");
+//   if (!taskDiv.hasClass("checked")) {
+//     $(this).addClass("checked").attr("data-task-level", 3);
+//   } else {
+//     $(this).removeClass("checked").attr("data-task-level", task.priorityLevel);
+//   }
 // });
 
 // const checkboxes = $(event.target);
@@ -189,5 +224,30 @@ const taskList = $("#task-list");
 //   }
 
 $(document).ready(function () {
+  // taskList.on("click", ".check-box", function () {
+  //   location.reload();
+  // });
   renderTaskList();
+
+  // $(".check-box").change(function () {
+  //   if ($(this).is(":checked")) {
+  //     console.log("checked this!!");
+  //     $(this).parent().addClass("checked");
+  //   } else {
+  //     $(this).parent().removeClass("checked");
+  //     console.log("unchecked!");
+  //   }
+
+  taskListEl.on("change", ".check-box", function () {
+    if ($(this).is(":checked")) {
+      console.log("checked this");
+      $(this).parent().addClass("checked");
+    } else {
+      $(this).parent().removeClass("checked");
+      console.log("unchecked!");
+    }
+  });
+
+  // taskListEl.empty();
+  // renderTaskList();
 });

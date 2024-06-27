@@ -16,6 +16,11 @@
   color: white;
 }
 
+/* input[type="checkbox"]:checked + button {
+  background-color: lightblue;
+  text-decoration: line-through;
+} */
+
 .quote-section {
   text-align: center;
   font-size: 150%;
