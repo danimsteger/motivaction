@@ -1,5 +1,19 @@
+.red {
+  background-color: red;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.green {
+  background-color: green;
+}
+
 .checked {
   text-decoration: line-through;
+  background-color: black;
+  color: white;
 }
 
 .quote-section {

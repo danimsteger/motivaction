@@ -48,24 +48,32 @@ function handleAddTask(event) {
   const tasks = readTasksFromStorage();
   tasks.push(newTask);
 
-  saveTasksToStorage(tasks);
+  let sortedTasks = tasks.sort((t1, t2) =>
+    t1.priority > t2.priority ? 1 : t1.priority < t2.priority ? -1 : 0
+  );
+  console.log(sortedTasks);
+
+  saveTasksToStorage(sortedTasks);
 
   console.log(newTask);
   console.log(tasks);
 
   taskInputEl.val("");
   priorityLevelInputEl.val(defaultPriority);
-
+  taskListEl.empty();
   renderTaskList();
 }
 
 function createTask(task) {
+  console.log(task);
   const taskDiv = $("<button>")
     .addClass(
-      "button has-background-primary-on-scheme has-text-primary-100 block m-4 p-4 is-flex-direction-column"
+      "button has-text-primary-100 block m-4 p-4 is-flex-direction-column"
     )
-    .attr("data-task-id", task.id)
-    .attr("data-task-level", task.priorityLevel);
+    .attr({
+      "data-task-id": task.id,
+      "data-task-level": task.priority,
+    });
 
   const taskCheckbox = $("<input>")
     .attr("type", "checkbox")
@@ -75,9 +83,41 @@ function createTask(task) {
     .text("Delete")
     .attr("data-task-id", task.id);
 
+  // $(document).on("DOMNodeInserted", "#task-list", function () {
+  //   taskListEl
+  //     .find("button['data-task-level'='0']")
+  //     .addClass("has-background-danger has-text-warning");
+  // });
+
   //   taskName.append(taskDeleteButton);
   //   taskCheckbox.append(taskName);
   taskDiv.append(taskCheckbox, taskName, taskDeleteButton);
+
+  const taskLevel = taskDiv.attr("data-task-level");
+
+  if (taskLevel) {
+    const taskLevelNumber = parseInt(taskLevel);
+    if (!isNaN(taskLevelNumber) && taskLevelNumber === 0) {
+      taskDiv.addClass("red has-text-white");
+      console.log("this is high priority");
+    } else if (!isNaN(taskLevelNumber) && taskLevelNumber === 1) {
+      taskDiv.addClass("orange has-text-text");
+      console.log("this is medium priority");
+    } else if (!isNaN(taskLevelNumber) && taskLevelNumber === 2) {
+      taskDiv.addClass("green has-text-white");
+      console.log("this is low priority");
+    } else {
+      taskDiv.addClass("has-background-black has-text-white");
+      console.log("this is done");
+    }
+  }
+  // if (
+  //   taskDiv.attr("data-task-level") &&
+  //   parseInt(taskDiv.attr("data-task-level")) === 0
+  // ) {
+  //   taskDiv.addClass("has-background-danger has-text-warning");
+  //   console.log("this is running");
+  // }
 
   taskDiv.on("click", function () {
     if (!taskDiv.hasClass("checked")) {
@@ -95,10 +135,27 @@ function createTask(task) {
 function renderTaskList() {
   const tasks = readTasksFromStorage();
 
+  // let sortedTasks = tasks.sort((t1, t2) =>
+  //   t1.priority > t2.priority ? 1 : t1.priority < t2.priority ? -1 : 0
+  // );
+  // console.log(sortedTasks);
+
   for (let task of tasks) {
     taskListEl.append(createTask(task));
   }
 }
+
+// function compareValues(key, order = 'asc') {
+//   return function innerSort(a, b) {
+//     if(!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+//       return 0;
+//     }
+
+//     const varA = (typeof a [key] === 'string')
+//     ? a[key].to
+//   }
+// }
+
 taskSumbitEl.click(handleAddTask);
 
 modalTrigger.click(openModal);
