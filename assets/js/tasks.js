@@ -10,10 +10,6 @@ const taskListEl = $("#task-list");
 
 $("#current-date").text(today.format("dddd, MMMM DD"));
 
-// function generateTaskId(event) {
-//   return crypto.randomUUID();
-// }
-
 function createTask(task) {
   const taskDiv = $("<button>")
     .addClass(
@@ -34,14 +30,6 @@ function createTask(task) {
 
   taskDeleteButton.on("click", handleDeleteTask);
 
-  // $(document).on("DOMNodeInserted", "#task-list", function () {
-  //   taskListEl
-  //     .find("button['data-task-level'='0']")
-  //     .addClass("has-background-danger has-text-warning");
-  // });
-
-  //   taskName.append(taskDeleteButton);
-  //   taskCheckbox.append(taskName);
   taskDiv.append(taskCheckbox, taskName, taskDeleteButton);
 
   const taskLevel = taskDiv.attr("data-task-level");
@@ -50,16 +38,14 @@ function createTask(task) {
     const taskLevelNumber = parseInt(taskLevel);
     if (!isNaN(taskLevelNumber) && taskLevelNumber === 0) {
       taskDiv.addClass("red has-text-white");
-      console.log("this is high priority");
     } else if (!isNaN(taskLevelNumber) && taskLevelNumber === 1) {
       taskDiv.addClass("orange has-text-text");
-      console.log("this is medium priority");
     } else if (!isNaN(taskLevelNumber) && taskLevelNumber === 2) {
       taskDiv.addClass("green has-text-white");
-      console.log("this is low priority");
     } else {
-      taskDiv.addClass("has-background-black has-text-white");
+      taskDiv.addClass("has-background-black checked has-text-white");
       console.log("this is done");
+      taskDiv.children("input").attr("checked", true);
     }
   }
   // if (
@@ -86,14 +72,27 @@ function createTask(task) {
 function renderTaskList() {
   const tasks = readTasksFromStorage();
 
-  // let sortedTasks = tasks.sort((t1, t2) =>
-  //   t1.priority > t2.priority ? 1 : t1.priority < t2.priority ? -1 : 0
-  // );
-  // console.log(sortedTasks);
   taskListEl.empty();
   for (let task of tasks) {
     taskListEl.append(createTask(task));
   }
+
+  // const level = $(this).parent().attr("data-task-level");
+
+  // if (!isNaN(level) && level === 3) {
+  //   $(this).parent().addClass("checked has-text-white");
+  //   console.log("this is checked off");
+  // }
+
+  // if ("data-task-level" == 3) {
+  //   $(this).parent().addClass("checked");
+  // }
+
+  //   .addClass("checked").attr("data-task-level", 3);
+  // } else {
+  //   $(this).parent().removeClass("checked");
+  //   console.log("unchecked!");
+  // }
 }
 
 function readTasksFromStorage() {
@@ -184,6 +183,56 @@ closeModalTrigger.click(closeModal);
 
 const taskList = $("#task-list");
 
+$(document).ready(function () {
+  // taskList.on("click", ".check-box", function () {
+  //   location.reload();
+  // });
+  renderTaskList();
+
+  // $(".check-box").change(function () {
+  //   if ($(this).is(":checked")) {
+  //     console.log("checked this!!");
+  //     $(this).parent().addClass("checked");
+  //   } else {
+  //     $(this).parent().removeClass("checked");
+  //     console.log("unchecked!");
+  //   }
+
+  taskListEl.on("change", ".check-box", function () {
+    if ($(this).is(":checked")) {
+      console.log("checked this");
+      $(this).parent().addClass("checked").attr({ "data-task-level": 3 });
+
+      // $(this).attr("checked", true);
+    } else {
+      $(this).parent().removeClass("checked").attr({ "data-task-level": 2 });
+      console.log("unchecked!");
+    }
+
+    const tasks = readTasksFromStorage();
+
+    const id = $(this).parent().attr("data-task-id");
+    const level = $(this).parent().attr("data-task-level");
+    console.log(id);
+    console.log(level);
+    for (const task of tasks) {
+      if (task.id == id) {
+        task.priority = 3;
+      }
+    }
+    let sortedTasks = tasks.sort((t1, t2) =>
+      t1.priority > t2.priority ? 1 : t1.priority < t2.priority ? -1 : 0
+    );
+    console.log(sortedTasks);
+
+    saveTasksToStorage(sortedTasks);
+    renderTaskList();
+  });
+});
+
+// taskListEl.empty();
+// renderTaskList()
+
 // function handleCheckedTask() {
 //   if (decider.checked) {
 //     alert("check");
@@ -223,31 +272,16 @@ const taskList = $("#task-list");
 //     taskList.addClass("checked");
 //   }
 
-$(document).ready(function () {
-  // taskList.on("click", ".check-box", function () {
-  //   location.reload();
-  // });
-  renderTaskList();
+// $(document).on("DOMNodeInserted", "#task-list", function () {
+//   taskListEl
+//     .find("button['data-task-level'='0']")
+//     .addClass("has-background-danger has-text-warning");
+// });
 
-  // $(".check-box").change(function () {
-  //   if ($(this).is(":checked")) {
-  //     console.log("checked this!!");
-  //     $(this).parent().addClass("checked");
-  //   } else {
-  //     $(this).parent().removeClass("checked");
-  //     console.log("unchecked!");
-  //   }
+//   taskName.append(taskDeleteButton);
+//   taskCheckbox.append(taskName);
 
-  taskListEl.on("change", ".check-box", function () {
-    if ($(this).is(":checked")) {
-      console.log("checked this");
-      $(this).parent().addClass("checked");
-    } else {
-      $(this).parent().removeClass("checked");
-      console.log("unchecked!");
-    }
-  });
-
-  // taskListEl.empty();
-  // renderTaskList();
-});
+// let sortedTasks = tasks.sort((t1, t2) =>
+//   t1.priority > t2.priority ? 1 : t1.priority < t2.priority ? -1 : 0
+// );
+// console.log(sortedTasks);
