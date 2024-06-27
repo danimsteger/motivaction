@@ -10,6 +10,10 @@ const taskListEl = $("#task-list");
 
 $("#current-date").text(today.format("dddd, MMMM DD"));
 
+// function generateTaskId(event) {
+//   return crypto.randomUUID();
+// }
+
 function openModal() {
   modal.addClass("is-active");
 }
@@ -32,11 +36,13 @@ function handleAddTask(event) {
   event.preventDefault();
 
   const taskName = taskInputEl.val().trim();
-  const priorityLevel = priorityLevelInputEl.find("option:selected").text();
+  const timestamp = new Date().getTime();
+  const priorityLevel = priorityLevelInputEl.find("option:selected").val();
 
   const newTask = {
     name: taskName,
     priority: priorityLevel,
+    id: timestamp,
   };
 
   const tasks = readTasksFromStorage();
@@ -54,19 +60,34 @@ function handleAddTask(event) {
 }
 
 function createTask(task) {
-  const taskDiv = $("<button>").addClass(
-    "button has-background-primary-on-scheme has-text-primary-100 block m-4 p-4 is-flex-direction-column"
-  );
-  //   .addClass(task.priorityLevel);
+  const taskDiv = $("<button>")
+    .addClass(
+      "button has-background-primary-on-scheme has-text-primary-100 block m-4 p-4 is-flex-direction-column"
+    )
+    .attr("data-task-id", task.id)
+    .attr("data-task-level", task.priorityLevel);
+
   const taskCheckbox = $("<input>")
     .attr("type", "checkbox")
     .addClass("check-box");
   const taskName = $("<p>").addClass("has-text-centered").text(task.name);
-  const taskDeleteButton = $("<button>").text("Delete");
+  const taskDeleteButton = $("<button>")
+    .text("Delete")
+    .attr("data-task-id", task.id);
 
   //   taskName.append(taskDeleteButton);
   //   taskCheckbox.append(taskName);
   taskDiv.append(taskCheckbox, taskName, taskDeleteButton);
+
+  taskDiv.on("click", function () {
+    if (!taskDiv.hasClass("checked")) {
+      $(this).addClass("checked").attr("data-task-level", 3);
+    } else {
+      $(this)
+        .removeClass("checked")
+        .attr("data-task-level", task.priorityLevel);
+    }
+  });
 
   return taskDiv;
 }
@@ -83,8 +104,7 @@ taskSumbitEl.click(handleAddTask);
 modalTrigger.click(openModal);
 closeModalTrigger.click(closeModal);
 
-const decider = $("#task-list");
-console.log(decider);
+const taskList = $("#task-list");
 
 // function handleCheckedTask() {
 //   if (decider.checked) {
@@ -93,8 +113,24 @@ console.log(decider);
 //   }
 // }
 
-function checked() {
-  alert("checked");
-}
+// taskList.on("click", ".check-box", function (event) {
+//   alert("checked");
+//   // event.target.addClass("checked");
+// });
 
-decider.on("click", ".check-box", checked);
+// const checkboxes = $(event.target);
+
+// $(event.target).addClass("checked");
+
+//   if (checkboxes.checked) {
+//     console.log("this is checked");
+//     console.log(event.target);
+//   }
+
+//   if (taskList.checked) {
+//     taskList.addClass("checked");
+//   }
+
+$(document).ready(function () {
+  renderTaskList();
+});
