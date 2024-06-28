@@ -1,6 +1,19 @@
 // Store your News API key
 const apiKey = "2a715776860348a69293b0483d1727e4";
 const newsSection = document.getElementById("news-section");
+console.log("new stuff");
+var url =
+  "https://api.currentsapi.services/v1/latest-news?" +
+  "language=us&" +
+  "apiKey=C43tW42wb8rWiukhTtALCyRRog30rbbmHHmOwOO9mV-ThHx3";
+var req = new Request(url);
+fetch(req)
+  .then(function (response) {
+    console.log(response.json());
+  })
+  .catch(function (err) {
+    console.log(err);
+  });
 
 // Make a request to the News API using the API key
 console.log("API Key");

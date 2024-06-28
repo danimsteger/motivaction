@@ -15,7 +15,7 @@ $("#current-date").text(today.format("dddd, MMMM DD"));
 function createTask(task) {
   const taskDiv = $("<button>")
     .addClass(
-      "button has-text-primary-100 block m-4 p-4 is-fullwidth is-flex-direction-row is-rounded is-justify-content-space-around task-button"
+      "button has-text-primary-100 block m-4 p-4 width is-flex-direction-row is-rounded is-justify-content-space-between task-button has-align-content-stretch"
     )
     // Gives each task button a custom attribute for it's id and priority level
     .attr({
@@ -25,13 +25,15 @@ function createTask(task) {
 
   const taskCheckbox = $("<input>")
     .attr("type", "checkbox")
-    .addClass("check-box");
+    .addClass("check-box ml-5 custom-check-box");
   const taskName = $("<h1>")
-    .addClass("has-text-centered has-text-weight-bold  is-size-3-tablet")
+    .addClass(
+      "has-text-centered has-text-weight-bold  has-text-grey-dark is-size-3-tablet"
+    )
     .text(task.name);
   const taskDeleteButton = $("<button>")
-    .text("Delete")
-    .addClass("button is-light")
+    .text("X")
+    .addClass("button is-small is-light mr-6")
     .attr("data-task-id", task.id);
 
   // Creates a delete button
@@ -45,13 +47,13 @@ function createTask(task) {
   if (taskLevel) {
     const taskLevelNumber = parseInt(taskLevel);
     if (!isNaN(taskLevelNumber) && taskLevelNumber === 0) {
-      taskDiv.addClass("has-background-danger has-text-white");
+      taskDiv.addClass("has-background-danger-90 has-text-white");
     } else if (!isNaN(taskLevelNumber) && taskLevelNumber === 1) {
-      taskDiv.addClass("has-background-warning has-text-text");
+      taskDiv.addClass("has-background-warning-90 has-text-text");
     } else if (!isNaN(taskLevelNumber) && taskLevelNumber === 2) {
-      taskDiv.addClass("has-background-success has-text-white");
+      taskDiv.addClass("has-background-success-90 has-text-white");
     } else {
-      taskDiv.addClass("checked has-background-text");
+      taskDiv.addClass("checked has-background-grey-light");
       // Makes it so that the completed tasks remain checked even on a page reload.
       taskDiv.children("input").attr("checked", true);
     }
