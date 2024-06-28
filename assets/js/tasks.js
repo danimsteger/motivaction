@@ -13,7 +13,7 @@ $("#current-date").text(today.format("dddd, MMMM DD"));
 function createTask(task) {
   const taskDiv = $("<button>")
     .addClass(
-      "button has-text-primary-100 block m-4 p-4 is-flex-direction-column task-item"
+      "button has-text-primary-100 block m-4 p-4 is-flex-direction-column task-button"
     )
     .attr({
       "data-task-id": task.id,
@@ -42,7 +42,7 @@ function createTask(task) {
       taskDiv.addClass("orange has-text-text");
     } else if (!isNaN(taskLevelNumber) && taskLevelNumber === 2) {
       taskDiv.addClass("green has-text-white");
-    } else if (!isNaN(taskLevelNumber) && taskLevelNumber === 3) {
+    } else {
       taskDiv.addClass("has-background-black checked has-text-white");
       console.log("this is done");
       taskDiv.children("input").attr("checked", true);
@@ -123,7 +123,6 @@ function handleAddTask(event) {
   const newTask = {
     name: taskName,
     priority: priorityLevel,
-    newPriority: priorityLevel,
     id: timestamp,
   };
 
@@ -133,6 +132,7 @@ function handleAddTask(event) {
   let sortedTasks = tasks.sort((t1, t2) =>
     t1.priority > t2.priority ? 1 : t1.priority < t2.priority ? -1 : 0
   );
+  console.log(sortedTasks);
 
   saveTasksToStorage(sortedTasks);
 
@@ -149,7 +149,11 @@ function handleDeleteTask() {
   const taskId = $(this).attr("data-task-id");
   let tasks = readTasksFromStorage();
 
+  console.log(taskId);
   tasks = tasks.filter((task) => task.id.toString() !== taskId);
+
+  console.log(taskId);
+  console.log(tasks);
 
   saveTasksToStorage(tasks);
   renderTaskList();
@@ -185,52 +189,44 @@ $(document).ready(function () {
   // });
   renderTaskList();
 
-  $(document).on("change", ".check-box", function () {
-    const isChecked = $(this).is(":checked");
-    const parentElement = $(this).closest(".task-item");
-    const id = parentElement.attr("data-task-id");
+  // $(".check-box").change(function () {
+  //   if ($(this).is(":checked")) {
+  //     console.log("checked this!!");
+  //     $(this).parent().addClass("checked");
+  //   } else {
+  //     $(this).parent().removeClass("checked");
+  //     console.log("unchecked!");
+  //   }
+
+  taskListEl.on("change", ".check-box", function () {
+    if ($(this).is(":checked")) {
+      console.log("checked this");
+      $(this).parent().addClass("checked").attr({ "data-task-level": 3 });
+
+      // $(this).attr("checked", true);
+    } else {
+      $(this).parent().removeClass("checked").attr({ "data-task-level": 2 });
+      console.log("unchecked!");
+    }
+
     const tasks = readTasksFromStorage();
 
-    console.log("checkbox changed for task with ID:" + id);
+    const id = $(this).parent().attr("data-task-id");
+    const level = $(this).parent().attr("data-task-level");
+    console.log(id);
+    console.log(level);
     for (const task of tasks) {
       if (task.id == id) {
-        task.newPriority = isChecked ? 3 : task.priority;
-        if (isChecked) {
-          parentElement.addClass("checked");
-          parentElement.attr("data-task-level", 3);
-          console.log("Updated task with ID: " + id);
-        } else {
-          parentElement.removeClass("checked");
-          parentElement.attr("data-task-level", task.priority);
-          console.log("task with ID" + id + "unchecked");
-        }
+        task.priority = 3;
       }
-
-      //     if (isChecked) {
-      //       task.newPriority = 3;
-      //       $(parentElement).addClass("checked").attr("data-task-level", 3);
-      //       console.log("Adding class and attribute");
-      //     } else {
-      //       task.newPriority = task.priority;
-      //       $(parentElement)
-      //         .removeClass("checked")
-      //         .attr("data-task-level", task.priority);
-      //       console.log("Removing class and attribute");
-      //     }
-      //   }
-      // }
-      let sortedTasks = tasks.sort((t1, t2) =>
-        t1.newPriority > t2.newPriority
-          ? 1
-          : t1.newPriority < t2.newPriority
-          ? -1
-          : 0
-      );
-      console.log(sortedTasks);
-
-      saveTasksToStorage(sortedTasks);
-      renderTaskList();
     }
+    let sortedTasks = tasks.sort((t1, t2) =>
+      t1.priority > t2.priority ? 1 : t1.priority < t2.priority ? -1 : 0
+    );
+    console.log(sortedTasks);
+
+    saveTasksToStorage(sortedTasks);
+    renderTaskList();
   });
 });
 
@@ -289,38 +285,3 @@ $(document).ready(function () {
 //   t1.priority > t2.priority ? 1 : t1.priority < t2.priority ? -1 : 0
 // );
 // console.log(sortedTasks);
-
-// $(".check-box").change(function () {
-//   if ($(this).is(":checked")) {
-//     console.log("checked this!!");
-//     $(this).parent().addClass("checked");
-//   } else {
-//     $(this).parent().removeClass("checked");
-//     console.log("unchecked!");
-//   }
-
-// if ($(this).is(":checked")) {
-//   console.log("checked this");
-//   $(this).parent().addClass("checked").attr("data-task-level", 3);
-// }
-// // } else {
-// //   $(this).parent().removeClass("checked");
-// //   console.log("unchecked!");
-// // }
-
-// const level = $(this).parent().attr("data-task-level");
-// console.log(id);
-// console.log(level);
-// for (const task of tasks) {
-//   if (task.id == id) {
-//     task.newPriority = 3;
-//   }
-// }
-// let sortedTasks = tasks.sort((t1, t2) =>
-//   t1.newPriority > t2.newPriority
-//     ? 1
-//     : t1.newPriority < t2.newPriority
-//     ? -1
-//     : 0
-// );
-// $(this).parent().addClass("checked").attr("data-task-level", 3
