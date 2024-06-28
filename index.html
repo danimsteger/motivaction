@@ -16,13 +16,56 @@
       <h1 class="title is-1 has-text-centered">Good Morning!</h1>
     </header>
     <div class="box quote-section">
-        <p class="title is-3 has-text-centered">Start Your Day Off with a Motivational Quote!</p>
-        <p id="quote"></p>
-        <p id="author"></p>
-        <button id="quotebtn">New Quote</button>
+      <p class="title is-3 has-text-centered">
+        Start Your Day Off with a Motivational Quote!
+      </p>
+      <p id="quote"></p>
+      <p id="author"></p>
+      <button id="quotebtn">New Quote</button>
     </div>
-    <section class="task-section">
-      <h2>To do on <span id="current-date"></span>:</h2>
+    <section class="task-section section">
+      <header>
+        <h2>To do on <span id="current-date"></span>:</h2>
+      </header>
+      <div id="add-task">
+        <button class="js-modal-trigger" data-target="add-task-modal">
+          Add Task
+        </button>
+        <div class="modal" id="add-task-modal">
+          <div class="modal-background"></div>
+
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <p class="modal-card-title">Add a task to complete today!</p>
+              <button class="delete close-modal" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+              <form id="add-task-form">
+                <input
+                  class="input is-medium is-rounded"
+                  type="text"
+                  placeholder="Add task here..."
+                  id="task-name"
+                />
+                <div class="select is-rounded" id="priority-level">
+                  <label>Select the Priority Level of this task</label>
+                  <select>
+                    <option value="0" id="default">High Priority</option>
+                    <option value="1">Medium Priority</option>
+                    <option value="2">Low Priority</option>
+                  </select>
+                </div>
+              </form>
+            </section>
+            <footer class="modal-card-foot">
+              <button class="button close-modal" id="add-task-submit">
+                Add Task
+              </button>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <div class="buttons" id="task-list"></div>
     </section>
 
     <section id="news-section">
@@ -59,11 +102,10 @@
   <footer class="footer">
     <div class="content has-text-centered">
       <p>
-        <strong>MotivAction</strong> by <a href="https://github.com/danimsteger">Danielle Steger</a> ,
-        <a href="https://github.com/wesleylocklair">Wesley Locklair</a>, and 
+        <strong>MotivAction</strong> by
+        <a href="https://github.com/danimsteger">Danielle Steger</a> ,
+        <a href="https://github.com/wesleylocklair">Wesley Locklair</a>, and
         <a href="https://github.com/BobbyValet304">Jalen Williams</a>.
-       
-        
       </p>
     </div>
   </footer>
