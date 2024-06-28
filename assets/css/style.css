@@ -1,6 +1,9 @@
 .checked h1 {
   text-decoration: line-through;
 }
+.link:hover {
+  font-weight: bold;
+}
 
 .quote-section {
   text-align: center;
@@ -9,7 +12,6 @@
   border-style: solid;
   border-color: bisque;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  width: 80%;
 }
 #quotebtn {
   border-style: solid;
@@ -20,29 +22,6 @@
   box-shadow: 1px 1px 1px 1px bisque;
   color: bisque;
 }
-
-
-
-/* input.custom-check-box {
-  width: 50px;
-  height: 50px;
-} */
-
-/* input.custom-check-box {
-  transform: scale(10);
-} */
-
-/* input[type="checkbox"] {
-  -webkit-appearance: none;
-  width: 30px;
-  height: 30px;
-  background: white;
-  border-radius: 5px;
-  border: 2px solid #555;
-} */
-/* input[type="checkbox"]:checked {
-  background: #abd;
-} */
 
 input[type="checkbox"] {
   zoom: 1.5;

@@ -12,51 +12,53 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body class="has-background-grey-dark">
-    <header>
+    <header class="mb-6 mr-6">
       <h1
-        class="title is-1 has-text-weight-light has-text-warning-light p-2 pl-4"
+        class="title is-1 has-text-weight-light has-text-warning-light p-2 pl-4 has-text-right mr-6 pt-6"
       >
         Good Morning.
       </h1>
       <h2
-        class="subtitle is-3 has-text-success-light has-text-weight-light pl-4"
+        class="subtitle is-3 has-text-success-light has-text-weight-light pl-4 has-text-right mr-6"
       >
         It's time to have a productive day!
       </h2>
     </header>
     <main class="is-flex-direction-row is-justify-content-center">
       <div
-        class="section box quote-section mx-6 my-5 has-background-warning-95"
+        class="column is-8 is-offset-1 is-flex-direction-column is-justify-content-start is-align-items-end"
       >
         <p
-          class="subtitle is-4 has-text-centered has-text-weight-light is-family-sans-serif"
+          class="subtitle has-text-warning-light is-3 has-text-weight-light is-family-sans-serif"
         >
           Sometimes you just need a little bit of
           <span class="has-text-weight-medium">MOTIVATION</span>...
         </p>
         <p
-          class="title is-4 has-text-centered has-text-weight-light is-family-sans-serif"
+          class="title is-4 has-text-left has-text-weight-normal is-family-sans-serif has-text-success-light mb-3"
         >
           Start your day off with a quote to help you feel a little more
           ~inspired~ for your busy day ahead:
         </p>
-        <section class="my-3">
-          <p class="title is-3 is-family-sans-serif" id="quote"></p>
-          <p class="subtitle is-4" id="author"></p>
-        </section>
-        <button class="button is-normal is-dark is-rounded" id="quotebtn">
-          New Quote
-        </button>
+        <div class="section quote-section my-5 has-background-warning-95">
+          <section class="my-3">
+            <p class="title is-3 is-family-sans-serif" id="quote"></p>
+            <p class="subtitle is-4" id="author"></p>
+          </section>
+          <button class="button is-normal is-dark is-rounded" id="quotebtn">
+            New Quote
+          </button>
+        </div>
       </div>
       <section class="task-section section">
         <header>
           <h2
-            class="title is-3 has-text-success-light has-text-weight-semibold has-text-centered"
+            class="title is-1 has-text-success-light has-text-weight-semibold has-text-centered my-6"
           >
-            <span id="current-date"></span>:
+            ⎯⎯⎯ <span id="current-date"></span> ⎯⎯⎯
           </h2>
           <h1
-            class="subtitle is-4 has-text-warning-light has-text-weight-light has-text-centered mb-4"
+            class="subtitle is-4 has-text-warning-light has-text-weight-light has-text-right mr-6 pr-6 mb-4"
           >
             Keep track of today's To-Dos:
           </h1>
@@ -112,26 +114,56 @@
           </div>
         </div>
         <div
-          class="buttons is-flex is-justify-content-center"
+          class="buttons is-flex is-justify-content-end mr-6"
           id="task-list"
         ></div>
       </section>
 
-    <section id="dad-jokes-section">
-      <h2>Dad Jokes</h2>
+      <section id="dad-jokes-section">
+        <h2 class="subtitle is-4x has-text-centered has-text-success-light">
+          We know that mornings can be rough... <br />
+          Here's a little "Dad Joke" to make you laugh:
+        </h2>
 
-      <div id="dad-jokes">
-        <p id="jokes-line"></p>
-        <button id="jokes-button">New Jokes</button>
-      </div>
-    </section>
-    <footer class="footer">
+        <div id="dad-jokes">
+          <p
+            class="title is-3 has-text-warning-light has-text-centered px-7"
+            id="jokes-line"
+          ></p>
+          <div class="is-flex is-justify-content-center">
+            <button
+              class="button is-warning is-light is-rounded"
+              id="jokes-button"
+            >
+              New Joke
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer has-background-grey-dark">
       <div class="content has-text-centered">
-        <p>
-          <strong>MotivAction</strong> by
-          <a href="https://github.com/danimsteger">Danielle Steger</a> ,
-          <a href="https://github.com/wesleylocklair">Wesley Locklair</a>, and
-          <a href="https://github.com/BobbyValet304">Jalen Williams</a>.
+        <p class="has-text-warning-90 is-size-5">
+          <strong class="has-text-warning-90">MotivAction</strong> by
+          <a
+            class="has-text-danger-90 link"
+            href="https://github.com/danimsteger"
+            target="_blank"
+            >Danielle Steger</a
+          >
+          ,
+          <a
+            class="has-text-danger-90 link"
+            href="https://github.com/wesleylocklair"
+            target="_blank"
+            >Wesley Locklair</a
+          >, and
+          <a
+            class="has-text-danger-90 link"
+            href="https://github.com/BobbyValet304"
+            target="_blank"
+            >Jalen Williams</a
+          >.
         </p>
       </div>
     </footer>
