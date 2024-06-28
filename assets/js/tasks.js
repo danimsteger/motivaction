@@ -17,7 +17,7 @@ function createTask(task) {
     )
     .attr({
       "data-task-id": task.id,
-      "data-task-level": task.priority,
+      "data-task-level": task.currentPriority,
     });
 
   const taskCheckbox = $("<input>")
@@ -122,7 +122,8 @@ function handleAddTask(event) {
 
   const newTask = {
     name: taskName,
-    priority: priorityLevel,
+    originalPriority: priorityLevel,
+    currentPriority: priorityLevel,
     id: timestamp,
   };
 
@@ -130,7 +131,11 @@ function handleAddTask(event) {
   tasks.push(newTask);
 
   let sortedTasks = tasks.sort((t1, t2) =>
-    t1.priority > t2.priority ? 1 : t1.priority < t2.priority ? -1 : 0
+    t1.currentPriority > t2.currentPriority
+      ? 1
+      : t1.currentPriority < t2.currentPriority
+      ? -1
+      : 0
   );
   console.log(sortedTasks);
 
@@ -140,6 +145,7 @@ function handleAddTask(event) {
   console.log(tasks);
 
   taskInputEl.val("");
+  ///come back here
   priorityLevelInputEl.val(defaultPriority);
   // taskListEl.empty();
   renderTaskList();
@@ -199,29 +205,35 @@ $(document).ready(function () {
   //   }
 
   taskListEl.on("change", ".check-box", function () {
-    if ($(this).is(":checked")) {
-      console.log("checked this");
-      $(this).parent().addClass("checked").attr({ "data-task-level": 3 });
-
-      // $(this).attr("checked", true);
-    } else {
-      $(this).parent().removeClass("checked").attr({ "data-task-level": 2 });
-      console.log("unchecked!");
-    }
-
     const tasks = readTasksFromStorage();
-
     const id = $(this).parent().attr("data-task-id");
-    const level = $(this).parent().attr("data-task-level");
-    console.log(id);
-    console.log(level);
+
     for (const task of tasks) {
       if (task.id == id) {
-        task.priority = 3;
+        if ($(this).is(":checked")) {
+          console.log("checked this");
+          $(this).parent().addClass("checked").attr({ "data-task-level": 3 });
+
+          // $(this).attr("checked", true);
+        } else {
+          $(this)
+            .parent()
+            .removeClass("checked")
+            .attr({ "data-task-level": task.originalPriority });
+          console.log("unchecked!");
+        }
+        const level = $(this).parent().attr("data-task-level");
+        task.currentPriority = level;
+        console.log(id);
+        console.log(level);
       }
     }
     let sortedTasks = tasks.sort((t1, t2) =>
-      t1.priority > t2.priority ? 1 : t1.priority < t2.priority ? -1 : 0
+      t1.currentPriority > t2.currentPriority
+        ? 1
+        : t1.currentPriority < t2.currentPriority
+        ? -1
+        : 0
     );
     console.log(sortedTasks);
 
