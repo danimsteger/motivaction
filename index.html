@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MotivAction</title>
+    <title>☀︎ MotivAction</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css"
@@ -14,35 +14,43 @@
   <body class="has-background-grey-dark">
     <header class="mb-6 mr-6">
       <h1
-        class="title is-1 has-text-weight-light has-text-warning-light p-2 pl-4 has-text-right mr-6 pt-6"
+        class="title is-1 has-text-weight-normal has-text-warning-light p-2 pl-6 has-text-right ml-6 pt-6"
+      >
+        ☀︎ MotivAction
+      </h1>
+      <h1
+        class="title is-1 has-text-weight-light has-text-warning-light p-2 pl-6 has-text-left ml-6 pt-6"
       >
         Good Morning.
       </h1>
       <h2
-        class="subtitle is-3 has-text-success-light has-text-weight-light pl-4 has-text-right mr-6"
+        class="subtitle is-3 has-text-success-light has-text-weight-light pl-6 has-text-left ml-6 mb-6"
       >
         It's time to have a productive day!
       </h2>
     </header>
-    <main class="is-flex-direction-row is-justify-content-center">
+    <main class="mt-6 is-flex-direction-row is-justify-content-center">
       <div
-        class="column is-8 is-offset-1 is-flex-direction-column is-justify-content-start is-align-items-end"
+        class="column is-8 is-offset-3 is-flex-direction-column is-justify-content-start is-align-items-end"
       >
         <p
-          class="subtitle has-text-warning-light is-3 has-text-weight-light is-family-sans-serif"
+          class="subtitle has-text-warning-light is-3 has-text-weight-light is-family-sans-serif has-text-right mt-6"
         >
           Sometimes you just need a little bit of
           <span class="has-text-weight-medium">MOTIVATION</span>...
         </p>
         <p
-          class="title is-4 has-text-left has-text-weight-normal is-family-sans-serif has-text-success-light mb-3"
+          class="title is-4 has-text-right has-text-weight-normal is-family-sans-serif has-text-success-light mb-6"
         >
           Start your day off with a quote to help you feel a little more
           ~inspired~ for your busy day ahead:
         </p>
         <div class="section quote-section my-5 has-background-warning-95">
           <section class="my-3">
-            <p class="title is-3 is-family-sans-serif" id="quote"></p>
+            <p
+              class="title is-3 is-family-sans-serif has-text-text"
+              id="quote"
+            ></p>
             <p class="subtitle is-4" id="author"></p>
           </section>
           <button class="button is-normal is-dark is-rounded" id="quotebtn">
@@ -52,21 +60,28 @@
       </div>
       <section class="task-section section">
         <header>
-          <h2
-            class="title is-1 has-text-success-light has-text-weight-semibold has-text-centered my-6"
+          <div class="">
+            <h2
+              class="title is-1 has-text-success-light has-text-weight-semibold has-text-centered my-6"
+            >
+              ⎯⎯⎯ <span id="current-date"></span> ⎯⎯⎯
+            </h2>
+          </div>
+          <p
+            class="subtitle has-text-warning-light is-3 has-text-weight-light is-family-sans-serif has-text-centered"
           >
-            ⎯⎯⎯ <span id="current-date"></span> ⎯⎯⎯
-          </h2>
+            It's important to keep track of what you need to do...
+          </p>
           <h1
-            class="subtitle is-4 has-text-warning-light has-text-weight-light has-text-right mr-6 pr-6 mb-4"
+            class="title is-3 has-text-centered has-text-weight-normal is-family-sans-serif has-text-success-light mb-3"
           >
-            Keep track of today's To-Dos:
+            Make a list and watch it shrink as you check off items!
           </h1>
         </header>
         <div id="add-task">
           <div class="is-flex is-justify-content-center m-3">
             <button
-              class="button js-modal-trigger is-align-self-center is-warning is-light is-rounded"
+              class="button js-modal-trigger align-self-center is-warning is-light is-rounded m-4"
               data-target="add-task-modal"
             >
               Add Task
@@ -114,27 +129,36 @@
           </div>
         </div>
         <div
-          class="buttons is-flex is-justify-content-end mr-6"
+          class="buttons is-flex is-justify-content-center mb-6"
           id="task-list"
         ></div>
       </section>
 
-      <section id="dad-jokes-section">
-        <h2 class="subtitle is-4x has-text-centered has-text-success-light">
-          We know that mornings can be rough... <br />
-          Here's a little "Dad Joke" to make you laugh:
+      <section
+        id="dad-jokes-section"
+        class="column is-8 is-offset-1 is-flex-direction-column is-justify-content-start is-align-items-end mt-4"
+      >
+        <h2
+          class="subtitle has-text-warning-light is-3 has-text-weight-light is-family-sans-serif has-text-left mt-6"
+        >
+          We know that mornings can be rough...
         </h2>
+        <p
+          class="title is-3 has-text-left has-text-weight-normal is-family-sans-serif has-text-success-light mb-3"
+        >
+          Here's a quick "Dad Joke" to lift your spirits:
+        </p>
 
-        <div id="dad-jokes">
+        <div
+          id="dad-jokes"
+          class="has-background-warning-95 section has-text-text"
+        >
           <p
-            class="title is-3 has-text-warning-light has-text-centered px-7"
+            class="title is-3 has-text-text has-text-centered px-7"
             id="jokes-line"
           ></p>
           <div class="is-flex is-justify-content-center">
-            <button
-              class="button is-warning is-light is-rounded"
-              id="jokes-button"
-            >
+            <button class="button is-dark is-rounded" id="jokes-button">
               New Joke
             </button>
           </div>
