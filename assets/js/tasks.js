@@ -15,7 +15,7 @@ $("#current-date").text(today.format("dddd, MMMM DD"));
 function createTask(task) {
   const taskDiv = $("<button>")
     .addClass(
-      "button has-text-primary-100 block m-4 p-4 width is-flex-direction-row is-rounded is-justify-content-space-between task-button has-align-content-stretch"
+      "button has-text-primary-100 block m-4 p-4 width is-flex-direction-row is-rounded is-justify-content-space-between task-button has-align-content-stretch to-do"
     )
     // Gives each task button a custom attribute for it's id and priority level
     .attr({
@@ -127,7 +127,6 @@ function handleAddTask(event) {
   console.log(tasks);
 
   taskInputEl.val("");
-  ///come back here
   priorityLevelInputEl.val(0);
   // taskListEl.empty();
   renderTaskList();
